@@ -1,13 +1,15 @@
-function attemptLogin(username, password) {
-    fetch(`/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
-    .then(response => response.json())
-    .then(state => console.log(state));
+async function attemptLogin(username, password) {
+    return await fetch(
+        `/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    )
+    .then(response => { return response.json() });
 }
 
-function createAccount(username, password) {
-    fetch(`/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
-    .then(response => response.json())
-    .then(state => console.log(state));
+async function createAccount(username, password) {
+    return await fetch(
+        `/api/createAccount?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    )
+    .then(response => { return response.json() });
 }
 
 let db_helper = {

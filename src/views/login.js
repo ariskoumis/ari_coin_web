@@ -25,6 +25,8 @@ export default class Login extends React.Component {
             newUser: false,
             modalOpened: false
         };
+
+        this.handleLoginAttempt = this.handleLoginAttempt.bind(this);
     }
 
     toggleModal = () => {
@@ -52,8 +54,15 @@ export default class Login extends React.Component {
         }
     }
 
-    handleLoginAttempt = () => {
-        db.attemptLogin(this.state.username, this.state.password);
+    async handleLoginAttempt() {
+        let loginAttempt = await db.attemptLogin(this.state.username, this.state.password);
+        console.log(loginAttempt)
+        if (loginAttempt.result == 1) {
+            alert("Login Successful!");
+        } else {
+            alert(`Login failed! Reason: ${loginAttempt.reason}`);
+        }
+
     }
 
     render() {

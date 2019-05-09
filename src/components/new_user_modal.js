@@ -23,14 +23,21 @@ export default class NewUserModal extends React.Component {
       super(props);
       this.state = {
       };
+
+      this.createAccount = this.createAccount.bind(this);
     }
 
     toggle = () => {
         this.props.toggleModal()
     }
 
-    createAccount = () => {
-        let account_create = this.props.createAccount(this.state.username, this.state.password);
+    async createAccount() {
+        let accountCreateAttempt = await this.props.createAccount(this.state.username, this.state.password);
+        if (accountCreateAttempt.result == 1) {
+            alert("Login Successful!");
+        } else {
+            alert(`Login Failed! Reason: ${accountCreateAttempt.reason}`);
+        }
     }
 
     handleChange = (e) =>{
