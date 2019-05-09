@@ -1,25 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
+import { 
+  Button,
+  Card, 
+  CardImg, 
+  CardText, 
+  CardBody,
+  CardTitle, 
+  CardSubtitle,
+  Col,
+  Container,
+  Row } from 'reactstrap';
+import NavBar from './components/navbar.js';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <NavBar />
+      <Row>
+        <Col sm="4">
+          <Card body>
+            <CardTitle>Special Title Treatment</CardTitle>
+            <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+            <Button>Go somewhere</Button>
+          </Card>
+        </Col>
+        <Col sm="4">
+          <Card body>
+            <CardTitle>Special Title Treatment</CardTitle>
+            <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+            <Button>Go somewhere</Button>
+          </Card>
+        </Col>
+        <Col sm="4">
+          <Card body>
+            <CardTitle>Special Title Treatment</CardTitle>
+            <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+            <Button>Go somewhere</Button>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
