@@ -3,7 +3,7 @@ import {
     Container
     } from 'reactstrap';
 
-export default class Market extends React.Component {
+export default class About extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,8 +14,8 @@ export default class Market extends React.Component {
     render() {
         return (
             <Container>
-                Market!
+                About!
             </Container>
-        )
+        );
     }
 }

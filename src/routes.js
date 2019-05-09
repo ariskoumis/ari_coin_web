@@ -8,8 +8,10 @@ import Home from './views/home';
 import Admin from './views/admin';
 import Market from './views/market';
 import Mine from './views/mine';
+import Login from './views/login';
+import About from './views/about';
 
-import NavBar from './views/navbar.js';
+import NavBar from './components/navbar.js';
 
 export const Routes = () => {
     return(
@@ -23,6 +25,8 @@ export const Routes = () => {
                 <Route exact path="/admin" component={Admin}></Route>
                 <Route exact path="/market" component={Market}></Route>
                 <Route exact path="/mine" component={Mine}></Route>
+                <Route exact path="/login" component={Login}></Route>
+                <Route exact path="/about" component={About}></Route>
                 <Route>
                     <Redirect to="/home" />
                 </Route>

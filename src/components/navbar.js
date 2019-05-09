@@ -38,25 +38,14 @@ export default class NavBar extends React.Component {
                 <NavLink href="/home/">Home</NavLink>
               </NavItem>
               <NavItem>
+                <NavLink href="/login/">Login</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/about/">About</NavLink> 
+              </NavItem>
+              <NavItem>
                 <NavLink href="https://github.com/ariskoumis/ari_coin_web">GitHub</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Options
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Option 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Option 2
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
