@@ -85,7 +85,7 @@ app.get('/api/createAccount', (req, res) => {
                   property: "login_data",
                   current_user: user.username,
                   logged_in: true,
-                  admin: false
+                  admin: true
                 }
               );
 
@@ -123,13 +123,64 @@ app.get('/api/userIsLoggedIn', (req, res) => {
     
     res.end();
   });
-  
-  
+});
+
+app.get('/api/getMarketValue', (req, res) => {
+  db.collection("app_state").findOne({property: "market_value"}, (err, result) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      result: result.value 
+    }));
+  })
+});
+
+app.get('/api/getMiningCap', (req, res) => {
+  db.collection("app_state").findOne({property: "mining_cap"}, (err, result) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+      result: result.value 
+    }));
+  })
+});
+
+app.get('/api/updateCoinData', (req, res) => {
+  db.collection("app_state").update(
+    {property: "market_value"},
+    {
+      property: "market_value",
+      value: +req.query.market_value
+    }
+  );
+
+  db.collection("app_state").update(
+    {property: "mining_cap"},
+    {
+      property: "mining_cap",
+      value: +req.query.mining_cap
+    }
+  );
+
+  res.send(JSON.stringify({
+    result: 1 
+  }));
+})
+
+app.get('/api/currentUserIsAdmin', (req, res) => {
+  db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
+    res.setHeader('Content-Type', 'application/json');
+
+      res.send(JSON.stringify({
+        result: result.admin
+      }));
+    
+    res.end();
+  });
 });
 
 app.get('/api/logout', (req, res) =>{
   db.collection("app_state").remove({property: "login_data"});
-})
+});
+
 
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')
