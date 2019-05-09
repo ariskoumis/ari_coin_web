@@ -1,9 +1,13 @@
 function attemptLogin(username, password) {
-    alert(username +  password)
+    fetch(`/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
+    .then(response => response.json())
+    .then(state => console.log(state));
 }
 
 function createAccount(username, password) {
-    alert(username +  password)
+    fetch(`/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`)
+    .then(response => response.json())
+    .then(state => console.log(state));
 }
 
 let db_helper = {
