@@ -10,6 +10,15 @@ import {
     Col,
     Container,
     Row } from 'reactstrap';
+import {
+    FaArrowRight,
+    FaAmilia,
+    FaShoppingCart,
+    FaIndustry
+    } from "react-icons/fa";
+import {
+    Link
+} from 'react-router-dom';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -25,23 +34,26 @@ export default class Home extends React.Component {
                 <Row>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button>Go somewhere</Button>
+                        <CardTitle>Admin</CardTitle>
+                        <FaAmilia size={70} />
+                        <CardText>ARI ONLY - KEEP OUT!</CardText>
+                        <Button tag={Link} to="/admin"> <FaArrowRight/> </Button>
                     </Card>
                     </Col>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button>Go somewhere</Button>
+                        <CardTitle>Market</CardTitle>
+                        <FaShoppingCart size={70} />
+                        <CardText>Buy, sell, montior AriCoins</CardText>
+                        <Button tag={Link} to="/market"> <FaArrowRight/> </Button>
                     </Card>
                     </Col>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                        <Button>Go somewhere</Button>
+                        <CardTitle>Mine</CardTitle>
+                        <FaIndustry size={70} />
+                        <CardText>Earn AriCoins for free!</CardText>
+                        <Button tag={Link} to="/mine"> <FaArrowRight/> </Button>
                     </Card>
                     </Col>
                 </Row>

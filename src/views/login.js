@@ -16,7 +16,7 @@ import {
     Row,
     } from 'reactstrap';
 import NewUserModal from '../components/new_user_modal';
-import db from '../utils/db_wrapper';                
+import db from '../utils/db_wrapper';           
 
 export default class Login extends React.Component {
     constructor(props) {

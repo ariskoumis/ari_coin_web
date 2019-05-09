@@ -40,6 +40,13 @@ app.get('/api/attemptLogin', (req, res) => {
           reason: "invalid password"
         }));
       } else {
+        db.collection("app_state").insert(
+          {
+            property: "login_data",
+            current_user: user.username,
+            logged_in: true
+          }
+        );
         res.send(JSON.stringify({
           result: 1
         }));
@@ -73,6 +80,15 @@ app.get('/api/createAccount', (req, res) => {
             }));
           } else {
             if (result.result.ok) { 
+              db.collection("app_state").insert(
+                {
+                  property: "login_data",
+                  current_user: user.username,
+                  logged_in: true,
+                  admin: false
+                }
+              );
+
               res.send(JSON.stringify({
                 result: 1
               }));
@@ -89,6 +105,31 @@ app.get('/api/createAccount', (req, res) => {
     
     
 });
+
+app.get('/api/userIsLoggedIn', (req, res) => {
+  db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
+    res.setHeader('Content-Type', 'application/json');
+
+    if (result == null) {
+      res.send(JSON.stringify({
+        result: 0,
+        reason: "no account with that username exists."
+      }));
+    } else {
+      res.send(JSON.stringify({
+        result: 1
+      }))
+    }
+    
+    res.end();
+  });
+  
+  
+});
+
+app.get('/api/logout', (req, res) =>{
+  db.collection("app_state").remove({property: "login_data"});
+})
 
 app.listen(3001, () =>
   console.log('Express server is running on localhost:3001')

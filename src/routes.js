@@ -16,7 +16,7 @@ import NavBar from './components/navbar.js';
 export const Routes = () => {
     return(
         <div>
-            <NavBar />
+            <NavBar loginStateUpdated/>
             <Switch>
                 <Route exact path="/">
                     <Redirect to="/home" />

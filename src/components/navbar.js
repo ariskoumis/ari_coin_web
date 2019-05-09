@@ -11,6 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+import db from '../utils/db_wrapper';    
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -18,14 +19,41 @@ export default class NavBar extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      loggedIn: false
     };
   }
+
+  componentWillMount() {
+    let logged_in = this.loggedIn();
+    this.setState({
+      loggedIn: logged_in
+    })
+  }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  async loggedIn() {
+    let logged_in = await db.loggedIn();
+    if (logged_in.result) {
+        return true
+    } else {
+        return false
+    }
+  }
+
+  handleLogout = () => {
+    db.logout();
+    this.setState({
+      loggedIn: false
+    });
+    this.forceUpdate();
+  }
+
   render() {
     return (
       <div>
@@ -37,9 +65,14 @@ export default class NavBar extends React.Component {
               <NavItem>
                 <NavLink href="/home/">Home</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/login/">Login</NavLink>
-              </NavItem>
+              { this.state.loggedIn ? 
+                  <NavItem>
+                  <NavLink href="/login/">Login</NavLink>
+                  </NavItem>
+                : <NavItem>
+                    <NavLink onClick={this.handleLogout}>Logout</NavLink> 
+                  </NavItem>
+              }
               <NavItem>
                 <NavLink href="/about/">About</NavLink> 
               </NavItem>
