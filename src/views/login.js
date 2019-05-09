@@ -15,39 +15,72 @@ import {
     InputGroupAddon,
     Row,
     } from 'reactstrap';
+import NewUserModal from '../components/new_user_modal';
+import db from '../utils/db_wrapper';                
 
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newUser: false 
+            newUser: false,
+            modalOpened: false
         };
+    }
+
+    toggleModal = () => {
+        this.setState(prevState => ({
+            modalOpened: !prevState.modalOpened
+        }));
+    }
+
+    handleChange = (e) =>{
+        switch(e.target.placeholder) {
+            case "username":
+                this.setState({
+                    username: e.target.value
+                });
+                break;
+
+            case "password":
+                this.setState({
+                    password: e.target.value
+                });
+                break;
+
+            default:   
+                break;
+        }
+    }
+
+    handleLoginAttempt = () => {
+        db.attemptLogin(this.state.username, this.state.password);
     }
 
     render() {
         return (
             <Container>
                 <Col sm="12" md={{ size: 6, offset: 3 }}>
-                <Card body>
-                    <CardTitle>Login</CardTitle>
-                    <InputGroup>
-                        <InputGroupAddon className="input-group-text" addonType="prepend"> <FaUserAlt /> </InputGroupAddon>
-                        <Input placeholder="username" />
-                    </InputGroup>
-                    <InputGroup>
-                        <InputGroupAddon className="input-group-text"   addonType="prepend"> <FaLock /> </InputGroupAddon>
-                        <Input placeholder="password" />
-                    </InputGroup>
-                    <Row>
-                        <Col>
-                            <Button color="primary" block>Login</Button>
-                        </Col>
-                        <Col>
-                            <Button block>New User?</Button>  
-                        </Col>
-                    </Row>
-                </Card>
+                    <Card body>
+                        <CardTitle>Login</CardTitle>
+                        <InputGroup>
+                            <InputGroupAddon className="input-group-text" addonType="prepend"> <FaUserAlt /> </InputGroupAddon>
+                            <Input onChange={this.handleChange} placeholder="username" />
+                        </InputGroup>
+                        <InputGroup>
+                            <InputGroupAddon className="input-group-text"   addonType="prepend"> <FaLock /> </InputGroupAddon>
+                            <Input onChange={this.handleChange} placeholder="password" />
+                        </InputGroup>
+                        <Row>
+                            <Col>
+                                <Button onClick={this.handleLoginAttempt} color="primary" block>Login</Button>
+                            </Col>
+                            <Col>
+                                <Button onClick={this.toggleModal} block>New User?</Button>  
+                            </Col>
+                        </Row>
+                    </Card>
                 </Col>
+                <NewUserModal modalOpened={this.state.modalOpened} toggleModal={this.toggleModal} createAccount={db.createAccount}/>
             </Container>
         );
     }
