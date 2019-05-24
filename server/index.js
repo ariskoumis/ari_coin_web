@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const mongoose = require('mongoose');
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+}); 
+
 //Set up default mongoose connection
 var mongoDB = 'mongodb://127.0.0.1/ari_coin_web';
 mongoose.connect(mongoDB, { useNewUrlParser: true });
@@ -33,6 +37,7 @@ app.get('/api/attemptLogin', (req, res) => {
           result: 0,
           reason: "no account with that username exists."
         }));
+        return;
       }
       if (result.password != user.password) {
         res.send(JSON.stringify({
@@ -109,11 +114,10 @@ app.get('/api/createAccount', (req, res) => {
 app.get('/api/userIsLoggedIn', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
     res.setHeader('Content-Type', 'application/json');
-
+    console.log(result)
     if (result == null) {
       res.send(JSON.stringify({
         result: 0,
-        reason: "no account with that username exists."
       }));
     } else {
       res.send(JSON.stringify({
@@ -164,6 +168,14 @@ app.get('/api/updateCoinData', (req, res) => {
     result: 1 
   }));
 })
+
+app.get('/api/getMarketData', (req, res) => {
+  res.send(JSON.stringify({
+    totalCoins: 2, 
+    totalMoney: 2, 
+    coinPrice: 2
+  }))
+});
 
 app.get('/api/currentUserIsAdmin', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err, result) => {

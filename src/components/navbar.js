@@ -39,6 +39,7 @@ export default class NavBar extends React.Component {
 
   async loggedIn() {
     let logged_in = await db.loggedIn();
+    alert(logged_in.result)
     if (logged_in.result) {
         return true
     } else {
@@ -65,13 +66,7 @@ export default class NavBar extends React.Component {
               <NavItem>
                 <NavLink href="/home/">Home</NavLink>
               </NavItem>
-              { this.state.loggedIn ? 
-                  <NavItem>
-                  <NavLink href="/login/">Login</NavLink>
-                  </NavItem>
-                : <NavItem>
-                    <NavLink onClick={this.handleLogout}>Logout</NavLink> 
-                  </NavItem>
+              { 
               }
               <NavItem>
                 <NavLink href="/about/">About</NavLink> 

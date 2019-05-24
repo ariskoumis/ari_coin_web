@@ -77,7 +77,7 @@ export default class Login extends React.Component {
                         </InputGroup>
                         <InputGroup>
                             <InputGroupAddon className="input-group-text"   addonType="prepend"> <FaLock /> </InputGroupAddon>
-                            <Input onChange={this.handleChange} placeholder="password" />
+                            <Input onChange={this.handleChange} placeholder="password" type="password"/>
                         </InputGroup>
                         <Row>
                             <Col>

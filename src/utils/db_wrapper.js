@@ -16,7 +16,16 @@ async function loggedIn(username) {
     return await fetch(
         `/api/userIsLoggedIn`
     )
+    
     .then(response => { return response.json() });
+}
+
+async function getMarketData() {
+    return await fetch(
+        '/api/getMarketData'
+    )
+
+    .then(response => { return response.json() })
 }
 
 async function logout() {
