@@ -12,6 +12,20 @@ async function createAccount(username, password) {
     .then(response => { return response.json() });
 }
 
+async function sellCoins(amount, marketValue) {
+    return await fetch (
+        `/api/sellCoins?amount=${encodeURIComponent(amount)}&marketValue=${encodeURI(marketValue)}`
+    )
+    .then(response => { return response.json() });
+}
+
+async function buyCoins(amount, marketValue) {
+    return await fetch (
+        `/api/buyCoins?amount=${encodeURIComponent(amount)}&marketValue=${encodeURI(marketValue)}`
+    )
+    .then(response => { return response.json() });
+}
+
 async function loggedIn(username) {
     return await fetch(
         `/api/userIsLoggedIn`
@@ -72,7 +86,9 @@ let db_helper = {
     getMarketValue: getMarketValue,
     getMiningCap: getMiningCap,
     updateCoinData: updateCoinData,
-    getMarketData: getMarketData
+    getMarketData: getMarketData,
+    buyCoins: buyCoins,
+    sellCoins: sellCoins
 };
 
 export default db_helper;

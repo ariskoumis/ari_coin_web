@@ -113,6 +113,46 @@ app.get('/api/createAccount', (req, res) => {
     
 });
 
+app.get('/api/sellCoins', (req, res) => {
+  db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
+    
+  });
+  db.collection("users").update(
+    {username: result1.current_user},
+    { 
+      $inc: {
+        totalCoins: -req.query.amount,
+        money: req.query.marketValue * req.query.amount
+      }
+    }
+  );
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    result: "OK"
+  }));
+});
+
+app.get('/api/buyCoins', (req, res) => {
+  db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
+    
+  });
+  db.collection("users").update(
+    {username: result1.current_user},
+    { 
+      $inc: {
+        totalCoins: req.query.amount,
+        money: - (req.query.marketValue * req.query.amount)
+      }
+    }
+  );
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    result: "OK"
+  }));
+});
+
 app.get('/api/userIsLoggedIn', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
     res.setHeader('Content-Type', 'application/json');

@@ -33,8 +33,13 @@ export default class Market extends React.Component {
         this.state = {
             totalCoins: 1,
             totalMoney: 1,
-            coinPrice: 1
+            coinPrice: 1,
+            buy_qty: 0,
+            sell_qty: 0
         };
+
+        this.buyCoins = this.buyCoins.bind(this);
+        this.sellCoins = this.sellCoins.bind(this);
     }
 
     async componentWillMount() {
@@ -60,6 +65,66 @@ export default class Market extends React.Component {
         }
     }
 
+    async buyCoins(){
+        let buy_qty = parseInt(this.state.buy_qty);
+        let coinPrice = parseInt(this.state.coinPrice);
+        if (isNaN(buy_qty)) {
+            alert("Error making purchase - quantity must be number");
+            return;
+        }
+
+        if (coinPrice * buy_qty > parseInt(this.state.totalMoney)) {
+            alert(`You currently have $${this.state.totalMoney}, which cannot cover purchasing ${buy_qty} at a rate of $${coinPrice}`)
+            return;
+        }
+
+        let purchaseAttempt = db.buyCoins(buy_qty, coinPrice);
+        if (purchaseAttempt.result == "OK") {
+            alert("Purchase successful!")
+        }
+    }
+
+    async sellCoins (){
+        let sell_qty = parseInt(this.state.sell_qty);
+        if (isNaN(sell_qty)) {
+            alert("Error making purchase - quantity must be number");
+            return;
+        }
+
+        if (sell_qty > this.state.totalCoins) {
+            alert(`Error making purchase - you don't have ${sell_qty} coins to sell.`)
+            return;
+        }
+
+        let salesAttempt = db.sellCoins(sell_qty, this.state.coinPrice);
+        if (salesAttempt.result == "OK") {
+            alert(`You have successfully sold ${this.state.sell_qty} AriCoins.`);
+        }
+
+    }
+    
+    handleChange = (e) =>{
+        switch(e.target.id) {
+            case "sell-input":
+                this.setState({
+                    sell_qty: parseInt(e.target.value)
+                });
+                console.log(this.state.sell_qty)
+                break;
+
+            case "buy-input":
+                this.setState({
+                    buy_qty: parseInt(e.target.value)
+                });
+                console.log(this.state.buy_qty)
+                break;
+
+            default:   
+                break;
+        }
+    }
+    
+
     render() {
         if (this.loggedIn()) {
             return(
@@ -83,14 +148,16 @@ export default class Market extends React.Component {
                         <Card body>
                             <CardHeader>Buy</CardHeader>
                             <CardBody>
-                                <CardText>How many?</CardText> <Input placeholder="price"></Input>
+                                <CardText>How many?</CardText> 
+                                <Input id="buy-input" placeholder="Quantity" onChange={this.handleChange}></Input>
                                 <Button onClick={this.buyCoins}> Confirm </Button>
                             </CardBody>
                         </Card>
                         <Card body>
                             <CardHeader>Sell</CardHeader>
                             <CardBody>
-                                <span> <CardText>How many?</CardText> <Input placeholder="price"></Input> </span>
+                                <span> <CardText>How many?</CardText> 
+                                <Input id="sell-input" placeholder="Quantity" onChange={this.handleChange}></Input> </span>
                                 <Button onClick={this.sellCoins}> Confirm </Button>
                             </CardBody>
                         </Card>
