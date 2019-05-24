@@ -115,17 +115,17 @@ app.get('/api/createAccount', (req, res) => {
 
 app.get('/api/sellCoins', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
-    
-  });
-  db.collection("users").update(
-    {username: result1.current_user},
-    { 
-      $inc: {
-        totalCoins: -req.query.amount,
-        money: req.query.marketValue * req.query.amount
+    db.collection("users").update(
+      {username: result.current_user},
+      { 
+        $inc: {
+          totalCoins: - parseInt(req.query.amount),
+          money: parseInt(req.query.marketValue) * parseInt(req.query.amount)
+        }
       }
-    }
-  );
+    );
+  });
+  
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({
@@ -135,17 +135,16 @@ app.get('/api/sellCoins', (req, res) => {
 
 app.get('/api/buyCoins', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err, result) => {
-    
-  });
-  db.collection("users").update(
-    {username: result1.current_user},
-    { 
-      $inc: {
-        totalCoins: req.query.amount,
-        money: - (req.query.marketValue * req.query.amount)
+    db.collection("users").update(
+      {username: result.current_user},
+      { 
+        $inc: {
+          totalCoins: parseInt(req.query.amount),
+          money: - (parseInt(req.query.marketValue) * parseInt(req.query.amount))
+        }
       }
-    }
-  );
+    );  
+  });
 
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({
@@ -219,11 +218,6 @@ app.get('/api/getMarketData', (req, res) => {
   db.collection("app_state").findOne({property: "login_data"}, (err1, result1) => {
     db.collection("app_state").findOne({property: "market_value"}, (err2, result2) => {
       db.collection("users").findOne({username: result1.current_user}, (err3, result3) => {
-        console.log(
-          "heyo"
-        )
-        console.log(result1)
-        console.log(result3)
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({
           totalCoins: result3.totalCoins,

@@ -40,6 +40,7 @@ export default class Market extends React.Component {
 
         this.buyCoins = this.buyCoins.bind(this);
         this.sellCoins = this.sellCoins.bind(this);
+        this.updateMarketData = this.updateMarketData.bind(this);
     }
 
     async componentWillMount() {
@@ -78,10 +79,12 @@ export default class Market extends React.Component {
             return;
         }
 
-        let purchaseAttempt = db.buyCoins(buy_qty, coinPrice);
+        let purchaseAttempt = await db.buyCoins(buy_qty, coinPrice);
         if (purchaseAttempt.result == "OK") {
             alert("Purchase successful!")
         }
+
+        this.updateMarketData();
     }
 
     async sellCoins (){
@@ -96,13 +99,24 @@ export default class Market extends React.Component {
             return;
         }
 
-        let salesAttempt = db.sellCoins(sell_qty, this.state.coinPrice);
+        let salesAttempt = await db.sellCoins(sell_qty, this.state.coinPrice);
         if (salesAttempt.result == "OK") {
             alert(`You have successfully sold ${this.state.sell_qty} AriCoins.`);
         }
 
+        this.updateMarketData();
     }
     
+    async updateMarketData() {
+        let market_data = await db.getMarketData();
+
+        this.setState({
+            totalCoins: market_data.totalCoins,
+            totalMoney: market_data.totalMoney,
+            coinPrice: market_data.coinPrice
+        });
+    }
+
     handleChange = (e) =>{
         switch(e.target.id) {
             case "sell-input":
@@ -116,7 +130,6 @@ export default class Market extends React.Component {
                 this.setState({
                     buy_qty: parseInt(e.target.value)
                 });
-                console.log(this.state.buy_qty)
                 break;
 
             default:   
