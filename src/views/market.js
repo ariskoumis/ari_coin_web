@@ -38,11 +38,13 @@ export default class Market extends React.Component {
     }
 
     async componentWillMount() {
-        let market_data = db.getMarketData();
+        let market_data = await db.getMarketData();
+        console.log("hey!")
+        console.log(market_data)
         this.setState({
-            totalCoins: market_data.total_coins,
-            totalMoney: market_data.total_money,
-            coinPrice: market_data.coin_price
+            totalCoins: market_data.totalCoins,
+            totalMoney: market_data.totalMoney,
+            coinPrice: market_data.coinPrice
         });
     }
 

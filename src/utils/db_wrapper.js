@@ -71,7 +71,8 @@ let db_helper = {
     currentUserIsAdmin: currentUserIsAdmin,
     getMarketValue: getMarketValue,
     getMiningCap: getMiningCap,
-    updateCoinData: updateCoinData
+    updateCoinData: updateCoinData,
+    getMarketData: getMarketData
 };
 
 export default db_helper;

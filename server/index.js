@@ -64,7 +64,9 @@ app.get('/api/attemptLogin', (req, res) => {
 app.get('/api/createAccount', (req, res) => {
     const user = {
       username: req.query.username,
-      password: req.query.password
+      password: req.query.password,
+      totalCoins: 0,
+      money: 100
     };
 
     db.collection("users").findOne({username: user.username}, (err, result) => {
@@ -170,11 +172,33 @@ app.get('/api/updateCoinData', (req, res) => {
 })
 
 app.get('/api/getMarketData', (req, res) => {
-  res.send(JSON.stringify({
-    totalCoins: 2, 
-    totalMoney: 2, 
-    coinPrice: 2
-  }))
+  let test = 0;
+
+
+  // This code is disgusting, I know! Sorry to anyone's eyes that read this
+  db.collection("app_state").findOne({property: "login_data"}, (err1, result1) => {
+    db.collection("app_state").findOne({property: "market_value"}, (err2, result2) => {
+      db.collection("users").findOne({username: result1.current_user}, (err3, result3) => {
+        console.log(
+          "heyo"
+        )
+        console.log(result1)
+        console.log(result3)
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({
+          totalCoins: result3.totalCoins,
+          totalMoney: result3.money, 
+          coinPrice: result2.value
+        }));
+
+      });
+    });
+  })
+  
+
+  console.log(test)
+
+
 });
 
 app.get('/api/currentUserIsAdmin', (req, res) => {
