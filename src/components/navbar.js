@@ -39,7 +39,7 @@ export default class NavBar extends React.Component {
 
   async loggedIn() {
     let logged_in = await db.loggedIn();
-    alert(logged_in.result)
+    // alert(logged_in.result)
     if (logged_in.result) {
         return true
     } else {

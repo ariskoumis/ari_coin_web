@@ -38,7 +38,7 @@ export default class Admin extends React.Component {
             }
 
         } else {
-            alert("Error: You must log in before visitng the Market!");
+            alert("Error: You must log in before visitng the Admin Portal!");
             this.props.history.push("/home")
             return false;
         }
@@ -93,7 +93,7 @@ export default class Admin extends React.Component {
             return (
                 <Container>
                     <Card body>
-                        <CardTitle>Login</CardTitle>
+                        <CardTitle>Admin</CardTitle>
                         <InputGroup>
                             <InputGroupAddon className="input-group-text" addonType="prepend"> MarketValue (current: ${this.state.marketValue}) </InputGroupAddon>
                             <Input onChange={this.handleChange} id="market-value" placeholder={this.state.marketValue} />

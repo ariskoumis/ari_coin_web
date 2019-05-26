@@ -5,6 +5,7 @@ import {
     CardImg, 
     CardText, 
     CardBody,
+    CardHeader,
     CardTitle, 
     CardSubtitle,
     Col,
@@ -34,26 +35,32 @@ export default class Home extends React.Component {
                 <Row>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Admin</CardTitle>
-                        <FaAmilia size={70} />
-                        <CardText>ARI ONLY - KEEP OUT!</CardText>
-                        <Button tag={Link} to="/admin"> <FaArrowRight/> </Button>
+                        <CardHeader>Admin</CardHeader>
+                        <CardBody>
+                            <FaAmilia size={70} />
+                            <CardText>ARI ONLY - KEEP OUT!</CardText>
+                            <Button tag={Link} to="/admin"> <FaArrowRight/> </Button>
+                        </CardBody>
                     </Card>
                     </Col>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Market</CardTitle>
-                        <FaShoppingCart size={70} />
-                        <CardText>Buy, sell, montior AriCoins</CardText>
-                        <Button tag={Link} to="/market"> <FaArrowRight/> </Button>
+                        <CardHeader>Market</CardHeader>
+                        <CardBody>
+                            <FaShoppingCart size={70} />
+                            <CardText>Buy, sell, montior AriCoins</CardText>
+                            <Button tag={Link} to="/market"> <FaArrowRight/> </Button>
+                        </CardBody>
                     </Card>
                     </Col>
                     <Col sm="4">
                     <Card body>
-                        <CardTitle>Mine</CardTitle>
-                        <FaIndustry size={70} />
-                        <CardText>Earn AriCoins for free!</CardText>
-                        <Button tag={Link} to="/mine"> <FaArrowRight/> </Button>
+                        <CardHeader>Mine</CardHeader>
+                        <CardBody>
+                            <FaIndustry size={70} />
+                            <CardText>Earn AriCoins for free!</CardText>
+                            <Button tag={Link} to="/mine"> <FaArrowRight/> </Button>
+                        </CardBody>
                     </Card>
                     </Col>
                 </Row>

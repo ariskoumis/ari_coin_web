@@ -1,3 +1,5 @@
+import { get } from "https";
+
 async function attemptLogin(username, password) {
     return await fetch(
         `/api/attemptLogin?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
@@ -77,6 +79,12 @@ async function updateCoinData(market_value, mining_cap) {
     .then(response => { return response.json() });
 }
 
+async function getMineableCoinsCount() {
+    return await fetch (
+        '/api/getMineableCoinsCount'
+    )
+}
+
 let db_helper = {
     attemptLogin: attemptLogin,
     createAccount: createAccount,
@@ -88,7 +96,8 @@ let db_helper = {
     updateCoinData: updateCoinData,
     getMarketData: getMarketData,
     buyCoins: buyCoins,
-    sellCoins: sellCoins
+    sellCoins: sellCoins,
+    getMineableCoins: getMineableCoinsCount
 };
 
 export default db_helper;

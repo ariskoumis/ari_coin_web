@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const mongoose = require('mongoose');
+const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+
 
 process.on('uncaughtException', function (err) {
   console.log(err);
@@ -59,6 +61,38 @@ app.get('/api/attemptLogin', (req, res) => {
       res.end();
     });
     
+});
+
+app.get('/api/submitComplement', (req, res) => {
+  let tone_analyzer = new ToneAnalyzerV3({
+      username: "sjsurobotics@gmail.com",
+      password: "LLst80T80jxS",
+      url: "https://gateway.watsonplatform.net/tone-analyzer/api",
+      version: '2017-09-21' 
+  });
+
+  console.log(typeof req.query.text);
+
+  let params = {
+      tone_input: req.query.text,
+      content_type: 'text/plain',
+      sentences: true
+  };
+
+  tone_analyzer.tone(params, function (error, response) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log(JSON.stringify(response, null, 2))  ;
+      }
+      // res.setHeader('Content-Type', 'application/json');
+      // res.send("send me the code")
+      res.send({
+        result: "OK",
+        tones: response.document_tone.tones
+      });
+      // res.end();
+  });
 });
 
 app.get('/api/createAccount', (req, res) => {
